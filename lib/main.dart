@@ -183,11 +183,12 @@ class PDFScreenState extends State<PDFScreen> {
         allowedExtensions: ['pdf', 'jpg'],
       );*/
 
-      //if (result != null) {
+      if (file != null) {
         //PlatformFile file = result.files.first;
-        File pdfFile = File(file!.path);
-
+        //File pdfFile = File(file!.path);
+        File pdfFile = File.fromRawPath(await file.readAsBytes());
         PDFDoc pdfDoc = await PDFDoc.fromFile(pdfFile);
+        print(file.path);
 
         String text = '';
         List<TextBlock> textBlocks = [];
@@ -210,7 +211,7 @@ class PDFScreenState extends State<PDFScreen> {
         setState(() {
           _extractedText = recognizedText.text;
         });
-      //}
+      }
     } catch (e) {
       print('Error: $e');
     }
