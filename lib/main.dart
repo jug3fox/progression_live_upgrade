@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
@@ -175,14 +176,16 @@ class PDFScreenState extends State<PDFScreen> {
 
   Future<void> _extractTextFromPDF() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      ImagePicker picker = ImagePicker();
+      XFile? file = await picker.pickMedia();
+      /*FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf', 'jpg'],
-      );
+      );*/
 
-      if (result != null) {
-        PlatformFile file = result.files.first;
-        File pdfFile = File(file.path!);
+      //if (result != null) {
+        //PlatformFile file = result.files.first;
+        File pdfFile = File(file!.path);
 
         PDFDoc pdfDoc = await PDFDoc.fromFile(pdfFile);
 
@@ -207,7 +210,7 @@ class PDFScreenState extends State<PDFScreen> {
         setState(() {
           _extractedText = recognizedText.text;
         });
-      }
+      //}
     } catch (e) {
       print('Error: $e');
     }
