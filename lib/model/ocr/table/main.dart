@@ -91,7 +91,7 @@ class PdfColumn<T> {
 }
 
 class PdfRow {
-  final Map<PdfColumn, dynamic> row = {};
+  final Map<PdfColumn, TextWord?> row = {};
   final PdfTable parentTable;
 
   PdfRow({
